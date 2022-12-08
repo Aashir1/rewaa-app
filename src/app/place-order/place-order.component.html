@@ -1,0 +1,57 @@
+<form class="place-order-form">
+  <mat-card class="order-details">
+    <mat-card-header>
+      <h3>Order Details</h3>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Supplier Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="supplier-name"
+          [(ngModel)]="supplierName"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input
+          matInput
+          type="text"
+          name="location"
+          [(ngModel)]="location"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Supplier Invoice Number</mat-label>
+        <input
+          matInput
+          type="text"
+          [pattern]="supplierInvoiceNumberPattern"
+          name="supplier-invoice-number"
+          [(ngModel)]="supplierInvoiceNumber"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Notes</mat-label>
+        <textarea
+          matInput
+          name="notes"
+          maxlength="200"
+          cols="30"
+          rows="10"
+          [(ngModel)]="notes"
+        ></textarea>
+        <small>{{ notes.length }}/200</small>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="products">
+    <mat-card-header>
+      <h3>Products</h3>
+    </mat-card-header>
+    <mat-card-content> </mat-card-content>
+  </mat-card>
+</form>

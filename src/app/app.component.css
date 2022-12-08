@@ -1,0 +1,14 @@
+#app {
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#app mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
