@@ -3,6 +3,10 @@
   justify-content: space-evenly;
 }
 
+.place-order-form mat-card-header h3 {
+  font-weight: 500;
+}
+
 .place-order-form .order-details {
   display: flex;
   flex-direction: column;
@@ -20,4 +24,8 @@
   flex-direction: column;
   flex: 1;
   max-width: 60%;
+}
+
+.place-order-form .products mat-form-field {
+  width: 40%;
 }
