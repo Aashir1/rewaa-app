@@ -1,0 +1,32 @@
+/* .place-order-form {
+    display: flex;
+    justify-content: space-evenly;
+  } */
+  
+  .place-order-form mat-card-header h3 {
+    font-weight: 500;
+  }
+  
+  .place-order-form .order-details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: min-content;
+  }
+  
+  .place-order-form .order-details mat-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .place-order-form .products {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 60%;
+  }
+  
+  .place-order-form .products mat-form-field {
+    width: 40%;
+  }
+  

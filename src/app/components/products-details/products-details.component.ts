@@ -9,15 +9,16 @@ import {
   startWith,
   switchMap,
 } from 'rxjs';
-import { Product } from '../interfaces/product';
-import { ProductService } from '../services/product.service';
+import { Product } from '../../interfaces/product';
+import { ProductService } from '../../services/product.service';
 
 @Component({
-  selector: 'app-place-order',
-  templateUrl: './place-order.component.html',
-  styleUrls: ['./place-order.component.css'],
+  selector: 'app-products-details',
+  templateUrl: './products-details.component.html',
+  styleUrls: ['./products-details.component.css']
 })
-export class PlaceOrderComponent implements OnInit {
+export class ProductsDetailsComponent implements OnInit {
+
   supplierName: string = '';
   location: string = '';
   supplierInvoiceNumber: string = '';
@@ -61,4 +62,5 @@ export class PlaceOrderComponent implements OnInit {
   displayOption(option?: Product | null) {
     return option?.description ?? '';
   }
+
 }

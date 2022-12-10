@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PlaceOrderComponent } from './place-order/place-order.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,9 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProductService } from './services/product.service';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderComponent } from './components/order/order.component';
+import { ProductsDetailsComponent } from './components/products-details/products-details.component';
+import { OrderDetailsComponent } from './container/order-details/order-details.component';
 
 @NgModule({
-  declarations: [AppComponent, PlaceOrderComponent],
+  declarations: [AppComponent, OrderComponent, ProductsDetailsComponent, OrderDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

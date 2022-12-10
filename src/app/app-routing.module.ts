@@ -1,9 +1,9 @@
+import { OrderDetailsComponent } from './container/order-details/order-details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PlaceOrderComponent } from './place-order/place-order.component';
 
 const routes: Routes = [
-  { path: 'place-order', component: PlaceOrderComponent },
+  { path: 'place-order', component: OrderDetailsComponent },
 ];
 
 @NgModule({
