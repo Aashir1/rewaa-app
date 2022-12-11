@@ -7,9 +7,11 @@ import {
 } from '@angular/animations';
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -32,15 +34,11 @@ import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
 })
 export class ProductsTableComponent implements OnInit, OnChanges {
   @Input() dataSource: Observable<ProductDetail[]> = of([] as ProductDetail[]);
+  @Output() onRemoveItem = new EventEmitter();
   isDataPresent: boolean = false;
 
-  columnsToDisplay: (keyof ProductDetail)[] = [
-    'title',
-    'newCost',
-    'newQty',
-    'taxCode',
-  ];
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+  columnsToDisplay = ['title', 'newCost', 'newQty', 'taxCode', 'remove'];
+  columnsToDisplayWithExpand = ['expand', ...this.columnsToDisplay];
   expandedElement?: ProductDetail | null;
 
   constructor() {}
@@ -57,5 +55,9 @@ export class ProductsTableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
+  }
+
+  handleRemove(element: ProductDetail) {
+    this.onRemoveItem.emit(element);
   }
 }

@@ -22,14 +22,6 @@ import { ProductService } from '../../services/product.service';
   styleUrls: ['./products-details.component.css'],
 })
 export class ProductsDetailsComponent implements OnInit {
-  supplierName: string = '';
-  location: string = '';
-  supplierInvoiceNumber: string = '';
-  notes: string = '';
-
-  // *Note: assuming that supplier invoice number only contain digits (0-9) and is atleast 3 digits long
-  supplierInvoiceNumberPattern = new RegExp(/[0-9]{3,}/);
-
   productVariantControl = new FormControl();
   productOptions$: Observable<Product[]> = of([] as Product[]);
   filteredProductOptions$: Observable<Product[]> = of([] as Product[]);
@@ -81,6 +73,14 @@ export class ProductsDetailsComponent implements OnInit {
       taxCode: TaxCode.ValueAddedTax,
     });
 
+    this._selectedProducts.next(this.previouslySelectedProducts);
+    this.productVariantControl.setValue('');
+  }
+
+  handleRemoveItemFromList(product: ProductDetail) {
+    this.previouslySelectedProducts = this.previouslySelectedProducts.filter(
+      (it) => it.id !== product.id
+    );
     this._selectedProducts.next(this.previouslySelectedProducts);
   }
 }

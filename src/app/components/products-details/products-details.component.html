@@ -32,7 +32,10 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <app-products-table [dataSource]="selectedProducts$"></app-products-table>
+      <app-products-table
+        [dataSource]="selectedProducts$"
+        (onRemoveItem)="handleRemoveItemFromList($event)"
+      ></app-products-table>
     </mat-card-content>
   </mat-card>
 </form>
