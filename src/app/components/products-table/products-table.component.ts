@@ -10,11 +10,13 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
+import { ProductDetailService } from 'src/app/services/product-detail.service';
 import { TaxCode } from 'src/app/shared/enums/tax-code';
 import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
 
@@ -33,7 +35,7 @@ import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
     ]),
   ],
 })
-export class ProductsTableComponent implements OnInit, OnChanges {
+export class ProductsTableComponent implements OnInit, OnDestroy {
   @Input() dataSource: Observable<ProductDetail[]> = of([] as ProductDetail[]);
   @Output() onRemoveItem = new EventEmitter();
   isDataPresent: boolean = false;
@@ -42,10 +44,12 @@ export class ProductsTableComponent implements OnInit, OnChanges {
   columnsToDisplayWithExpand = ['expand', ...this.columnsToDisplay];
   expandedElement?: ProductDetail | null;
 
-  constructor() {}
+  dataSourceSubscription?: Subscription;
+
+  constructor(private productDetailService: ProductDetailService) {}
 
   ngOnInit(): void {
-    this.dataSource.subscribe((value) => {
+    this.dataSourceSubscription = this.dataSource.subscribe((value) => {
       if (value.length > 0) {
         this.isDataPresent = true;
       } else {
@@ -54,20 +58,16 @@ export class ProductsTableComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+  ngOnDestroy() {
+    this.dataSourceSubscription?.unsubscribe();
   }
 
-  calculateCostExcludingTax(element: ProductDetail) {
-    return element.newCost * element.newQty;
+  calculateCost(element: ProductDetail, withTax: boolean = false) {
+    return this.productDetailService.calculateCost(element, withTax);
   }
 
   calculateTax(element: ProductDetail) {
-    if (element.taxCode === TaxCode.NoTax) {
-      return 0;
-    }
-
-    return this.calculateCostExcludingTax(element) * 0.15;
+    return this.productDetailService.calculateTax(element);
   }
 
   handleRemove(element: ProductDetail) {

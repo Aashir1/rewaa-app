@@ -15,6 +15,7 @@ import { TaxCode } from 'src/app/shared/enums/tax-code';
 import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
 import { Product } from '../../shared/interfaces/product';
 import { ProductService } from '../../services/product.service';
+import { ProductDetailService } from 'src/app/services/product-detail.service';
 
 @Component({
   selector: 'app-products-details',
@@ -27,11 +28,14 @@ export class ProductsDetailsComponent implements OnInit {
   filteredProductOptions$: Observable<Product[]> = of([] as Product[]);
 
   // TODO: cleanup variable names
-  previouslySelectedProducts: ProductDetail[] = [];
-  _selectedProducts = new BehaviorSubject([] as ProductDetail[]);
+  private _previouslySelectedProducts: ProductDetail[] = [];
+  private _selectedProducts = new BehaviorSubject([] as ProductDetail[]);
   selectedProducts$ = this._selectedProducts.asObservable();
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private productDetailService: ProductDetailService
+  ) {}
 
   ngOnInit() {
     this.productOptions$ = this.productService.getProducts();
@@ -66,21 +70,41 @@ export class ProductsDetailsComponent implements OnInit {
   handleSelectionChange(event: MatOptionSelectionChange) {
     const selectedProduct = event.source.value as Product;
 
-    this.previouslySelectedProducts.push({
+    this._previouslySelectedProducts.push({
       ...selectedProduct,
       newCost: 0,
       newQty: 0,
       taxCode: TaxCode.ValueAddedTax,
     });
 
-    this._selectedProducts.next(this.previouslySelectedProducts);
+    this._selectedProducts.next(this._previouslySelectedProducts);
     this.productVariantControl.setValue('');
   }
 
   handleRemoveItemFromList(product: ProductDetail) {
-    this.previouslySelectedProducts = this.previouslySelectedProducts.filter(
+    this._previouslySelectedProducts = this._previouslySelectedProducts.filter(
       (it) => it.id !== product.id
     );
-    this._selectedProducts.next(this.previouslySelectedProducts);
+    this._selectedProducts.next(this._previouslySelectedProducts);
+  }
+
+  calculateTotalCost(withTax: boolean = false) {
+    let total = 0;
+
+    this._previouslySelectedProducts.forEach((it) => {
+      total += this.productDetailService.calculateCost(it, withTax);
+    });
+
+    return total;
+  }
+
+  calculateTotalTax() {
+    let total = 0;
+
+    this._previouslySelectedProducts.forEach((it) => {
+      total += this.productDetailService.calculateTax(it);
+    });
+
+    return total;
   }
 }

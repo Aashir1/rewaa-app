@@ -82,15 +82,15 @@
       >
         <div>
           <p>Available Qty(Available in stock)</p>
-          <p>Value</p>
+          <p>{{ element['availableQty'] }}</p>
         </div>
         <div>
           <p>Total Cost(Tax Exclusive)</p>
-          <p>{{ calculateCostExcludingTax(element) }}</p>
+          <p>{{ calculateCost(element) }}</p>
         </div>
         <div>
           <p>Expected Qty(Total will be available)</p>
-          <p>Value</p>
+          <p>{{ element['expectedQty'] }}</p>
         </div>
         <div>
           <p>Tax Amount</p>
@@ -98,13 +98,11 @@
         </div>
         <div>
           <p>Last Buy Price</p>
-          <p>Value</p>
+          <p>{{ element['lastBuyPrice'] }}</p>
         </div>
         <div>
           <p>Tax Cost(Tax Inclusive)</p>
-          <p>
-            {{ calculateCostExcludingTax(element) + calculateTax(element) }}
-          </p>
+          <p>{{ calculateCost(element, true) }}</p>
         </div>
       </div>
     </td>
