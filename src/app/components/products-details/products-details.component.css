@@ -14,3 +14,14 @@
   align-items: center;
   column-gap: 5px;
 }
+
+.payment-section {
+  display: grid;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+}
+
+.payment-options {
+  margin: 20px 0;
+}

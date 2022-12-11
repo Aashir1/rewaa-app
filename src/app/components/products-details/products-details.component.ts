@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import {
   BehaviorSubject,
@@ -17,15 +17,31 @@ import { Product } from '../../shared/interfaces/product';
 import { ProductService } from '../../services/product.service';
 import { ProductDetailService } from 'src/app/services/product-detail.service';
 
+type PayNowOrLater = 'payNow' | 'payLater';
+type PaymentMethod = 'cash' | 'credit' | null;
+
 @Component({
   selector: 'app-products-details',
   templateUrl: './products-details.component.html',
   styleUrls: ['./products-details.component.css'],
 })
 export class ProductsDetailsComponent implements OnInit {
+  @Output() onSubmit = new EventEmitter();
+
   productVariantControl = new FormControl();
   productOptions$: Observable<Product[]> = of([] as Product[]);
   filteredProductOptions$: Observable<Product[]> = of([] as Product[]);
+
+  productForm = new FormGroup({
+    payNowOrLater: new FormControl<PayNowOrLater>('payNow'),
+    paymentMethod: new FormControl<PaymentMethod>(null, [Validators.required]),
+    paidAmount: new FormControl<number | undefined>(0, [Validators.min(0)]),
+    paymentDueDate: new FormControl<Date | undefined>(new Date(), [
+      Validators.required,
+    ]),
+  });
+
+  isPayingNow: boolean = true;
 
   // TODO: cleanup variable names
   private _previouslySelectedProducts: ProductDetail[] = [];
@@ -38,6 +54,21 @@ export class ProductsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.productForm.valueChanges.subscribe((change) => {
+      this.isPayingNow = change.payNowOrLater === 'payNow';
+
+      if (change.payNowOrLater === 'payLater' && change.paidAmount) {
+        const updatedValue = {
+          payNowOrLater: 'payLater' as const,
+          paidAmount: 0,
+          paymentMethod: 'cash' as const,
+          paymentDueDate: change.paymentDueDate,
+        };
+
+        this.productForm.setValue(updatedValue);
+      }
+    });
+
     this.productOptions$ = this.productService.getProducts();
     this.filteredProductOptions$ = this.productVariantControl.valueChanges.pipe(
       debounceTime(300),
@@ -106,5 +137,29 @@ export class ProductsDetailsComponent implements OnInit {
     });
 
     return total;
+  }
+
+  calculateCreditAmount() {
+    const totalCost = this.calculateTotalCost();
+    let paidAmount = 0;
+
+    if (this.productForm.get('paidAmount')?.valid) {
+      paidAmount = this.productForm.get('paidAmount')?.value ?? 0;
+    }
+
+    return totalCost - paidAmount;
+  }
+
+  handleSubmit(event: any) {
+    this.onSubmit.emit(event);
+
+    this.productForm.reset({
+      payNowOrLater: 'payNow',
+      paidAmount: 0,
+      paymentMethod: 'cash',
+      paymentDueDate: new Date(),
+    });
+
+    window.alert('Data Submitted');
   }
 }

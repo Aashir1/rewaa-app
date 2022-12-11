@@ -1,4 +1,6 @@
 <section class="container">
   <app-order></app-order>
-  <app-products-details></app-products-details>
+  <app-products-details
+    (onSubmit)="handleSubmit($event)"
+  ></app-products-details>
 </section>

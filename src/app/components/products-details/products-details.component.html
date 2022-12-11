@@ -35,6 +35,7 @@
         [dataSource]="selectedProducts$"
         (onRemoveItem)="handleRemoveItemFromList($event)"
       ></app-products-table>
+      <!-- Summary -->
       <div>
         <p>
           Sub Total (Tax Exclusive): <strong>{{ calculateTotalCost() }}</strong>
@@ -46,6 +47,75 @@
           Total (Tax Inclusive): <strong>{{ calculateTotalCost(true) }}</strong>
         </p>
       </div>
+      <!-- Payment -->
+      <form [formGroup]="productForm">
+        <div class="payment-options">
+          <mat-radio-group
+            formControlName="payNowOrLater"
+            color="primary"
+            name="payNowOrLater"
+          >
+            <mat-radio-button value="payNow">Pay Now</mat-radio-button>
+            <mat-radio-button value="payLater">Pay Later</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div *ngIf="isPayingNow" class="payment-section">
+          <div>Payment Method</div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-select
+                formControlName="paymentMethod"
+                placeholder="Select a method"
+                name="paymentMethod"
+              >
+                <mat-option value="cash">Cash</mat-option>
+                <mat-option value="creditCard">Credit Card</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>Paid Amount</div>
+          <div>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="number"
+                required
+                formControlName="paidAmount"
+                name="paidAmount"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="payment-section">
+          <div>Credit Amount</div>
+          <div>{{ calculateCreditAmount() }}</div>
+
+          <div>Payment Due Date</div>
+          <div>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="date"
+                required
+                formControlName="paymentDueDate"
+                name="paymentDueDate"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
     </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button color="primary">Cancel</button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="$event.preventDefault(); handleSubmit($event)"
+      >
+        Complete Order
+      </button>
+    </mat-card-actions>
   </mat-card>
 </form>

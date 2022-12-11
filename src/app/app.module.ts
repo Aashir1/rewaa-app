@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatRadioModule } from '@angular/material/radio';
 import { OrderComponent } from './components/order/order.component';
 import { ProductsDetailsComponent } from './components/products-details/products-details.component';
 import { ProductsTableComponent } from './components/products-table/products-table.component';
@@ -48,6 +49,7 @@ import { ProductService } from './services/product.service';
     MatTableModule,
     MatButtonModule,
     MatSelectModule,
+    MatRadioModule,
   ],
   providers: [ProductService, ProductDetailService],
   bootstrap: [AppComponent],
