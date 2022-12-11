@@ -38,12 +38,5 @@ async function main() {
     JSON.stringify(products),
     'utf-8'
   );
-
-  // backend schema
-  fs.writeFileSync(
-    path.join(__dirname, 'schema.json'),
-    JSON.stringify(products),
-    'utf-8'
-  );
 }
 main();
