@@ -32,6 +32,7 @@ import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
 })
 export class ProductsTableComponent implements OnInit, OnChanges {
   @Input() dataSource: Observable<ProductDetail[]> = of([] as ProductDetail[]);
+  isDataPresent: boolean = false;
 
   columnsToDisplay: (keyof ProductDetail)[] = [
     'title',
@@ -44,9 +45,17 @@ export class ProductsTableComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dataSource.subscribe((value) => {
+      if (value.length > 0) {
+        this.isDataPresent = true;
+      } else {
+        this.isDataPresent = false;
+      }
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
+    console.log(changes);
   }
 }

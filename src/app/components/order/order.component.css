@@ -1,31 +1,14 @@
-/* .place-order-form {
-    display: flex;
-    justify-content: space-evenly;
-  } */
-
-.place-order-form mat-card-header h3 {
-  font-weight: 500;
-}
-
-.place-order-form .order-details {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+:host {
+  width: 20%;
   height: min-content;
 }
 
-.place-order-form .order-details mat-card-content {
+:host mat-card-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-.place-order-form .products {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  max-width: 60%;
-}
-
-.place-order-form .products mat-form-field {
-  width: 40%;
+.place-order-form mat-card-header h3 {
+  font-weight: 500;
 }

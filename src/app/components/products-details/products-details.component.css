@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 60%;
+}
+
+:host mat-form-field {
+  width: 40%;
+}

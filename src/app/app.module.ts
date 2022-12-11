@@ -20,6 +20,7 @@ import { OrderComponent } from './components/order/order.component';
 import { ProductsDetailsComponent } from './components/products-details/products-details.component';
 import { OrderDetailsComponent } from './container/order-details/order-details.component';
 import { ProductsTableComponent } from './components/products-table/products-table.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ProductsTableComponent } from './components/products-table/products-tab
     MatAutocompleteModule,
     MatIconModule,
     MatTableModule,
+    MatButtonModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent],

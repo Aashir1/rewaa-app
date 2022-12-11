@@ -3,6 +3,7 @@
   [dataSource]="dataSource"
   multiTemplateDataRows
   class="mat-elevation-z8"
+  *ngIf="isDataPresent"
 >
   <ng-container
     matColumnDef="{{ column }}"
