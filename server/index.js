@@ -7,7 +7,7 @@ const model = {
     {
       method: 'GET',
       path: '/products',
-      response: schema['products'],
+      response: schema,
     },
   ],
 };

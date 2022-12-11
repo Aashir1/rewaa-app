@@ -40,7 +40,7 @@ export class ProductsDetailsComponent implements OnInit {
       startWith(''),
       switchMap((value: Product | string) => {
         if (value) {
-          const query = typeof value === 'string' ? value : value.description;
+          const query = typeof value === 'string' ? value : value.name;
           return this._filterProductOptions(query);
         }
 
@@ -53,14 +53,14 @@ export class ProductsDetailsComponent implements OnInit {
     return this.productOptions$.pipe(
       map((products) =>
         products.filter((each) =>
-          each.description.toLowerCase().includes(value.toLowerCase())
+          each.name.toLowerCase().includes(value.toLowerCase())
         )
       )
     );
   }
 
   displayOption(option?: Product | null) {
-    return option?.description ?? '';
+    return option?.name ?? '';
   }
 
   handleSelectionChange(event: MatOptionSelectionChange) {

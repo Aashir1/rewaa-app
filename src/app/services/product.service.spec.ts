@@ -1,10 +1,9 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { of } from "rxjs";
-import { Product } from "../shared/interfaces/product";
-import { ProductService } from "./product.service";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
+import { Product } from '../shared/interfaces/product';
+import { ProductService } from './product.service';
 
-
-describe("Product Service Testing", () => {
+describe('Product Service Testing', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let productService: ProductService;
   beforeEach(() => {
@@ -13,33 +12,19 @@ describe("Product Service Testing", () => {
   });
 
   it('should return expected products (HttpClient called once)', (done: DoneFn) => {
-    const expectedProduct: Product[] =
-      [{
-        id: 1,
-        title: "title",
-        price: 12.00,
-        description: "description",
-        category: "category",
-        image: "url",
-        rating: {
-          rate: 12.00,
-          count: 2,
-        }
-      }];
+    const expectedProduct: Product[] = [];
 
     httpClientSpy.get.and.returnValue(of(expectedProduct));
 
     productService.getProducts().subscribe({
-      next: products => {
+      next: (products) => {
         expect(products)
           .withContext('expected products')
           .toEqual(expectedProduct);
         done();
       },
-      error: done.fail
+      error: done.fail,
     });
-    expect(httpClientSpy.get.calls.count())
-      .withContext('one call')
-      .toBe(1);
+    expect(httpClientSpy.get.calls.count()).withContext('one call').toBe(1);
   });
-})
+});

@@ -8,3 +8,9 @@
 :host mat-form-field {
   width: 40%;
 }
+
+.products mat-card-content p {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}

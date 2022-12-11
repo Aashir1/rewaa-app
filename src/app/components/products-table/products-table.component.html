@@ -2,12 +2,11 @@
   mat-table
   [dataSource]="dataSource"
   multiTemplateDataRows
-  class="mat-elevation-z8"
   *ngIf="isDataPresent"
 >
-  <ng-container matColumnDef="title">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Product Name / SKU</th>
-    <td mat-cell *matCellDef="let element">{{ element['title'] }}</td>
+    <td mat-cell *matCellDef="let element">{{ element['name'] }}</td>
   </ng-container>
   <ng-container matColumnDef="newCost">
     <th mat-header-cell *matHeaderCellDef>New Cost</th>
@@ -18,7 +17,7 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="newQty">
-    <th mat-header-cell *matHeaderCellDef>New Qty</th>
+    <th mat-header-cell *matHeaderCellDef>New Qty (Tax Exclusive)</th>
     <td mat-cell *matCellDef="let element">
       <mat-form-field appearance="outline">
         <input matInput [(ngModel)]="element['newQty']" />
@@ -63,6 +62,7 @@
         mat-icon-button
         aria-label="expand row"
         (click)="handleRemove(element)"
+        color="warn"
       >
         <mat-icon> delete_outline </mat-icon>
       </button>
@@ -80,7 +80,32 @@
         class="example-element-detail"
         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
       >
-        {{ element | json }}
+        <div>
+          <p>Available Qty(Available in stock)</p>
+          <p>Value</p>
+        </div>
+        <div>
+          <p>Total Cost(Tax Exclusive)</p>
+          <p>{{ calculateCostExcludingTax(element) }}</p>
+        </div>
+        <div>
+          <p>Expected Qty(Total will be available)</p>
+          <p>Value</p>
+        </div>
+        <div>
+          <p>Tax Amount</p>
+          <p>{{ calculateTax(element) }}</p>
+        </div>
+        <div>
+          <p>Last Buy Price</p>
+          <p>Value</p>
+        </div>
+        <div>
+          <p>Tax Cost(Tax Inclusive)</p>
+          <p>
+            {{ calculateCostExcludingTax(element) + calculateTax(element) }}
+          </p>
+        </div>
       </div>
     </td>
   </ng-container>

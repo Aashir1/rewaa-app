@@ -20,7 +20,7 @@ export class OrderComponent implements OnInit {
       supplierInvoiceNumber: new FormControl('', [
         Validators.pattern(this.supplierInvoiceNumberPattern),
       ]),
-      notes: new FormControl(''),
+      notes: new FormControl('', [Validators.maxLength(200)]),
     });
   }
 

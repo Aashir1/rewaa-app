@@ -5,7 +5,7 @@
     </mat-card-header>
     <mat-card-content>
       <!-- TODO: extract styles to css file -->
-      <p style="display: flex; align-items: center; column-gap: 5px">
+      <p>
         <mat-icon> info_outline </mat-icon>
         <span>
           Products Qty, the average product cost and the latest buying price are
@@ -28,7 +28,7 @@
             [value]="option"
             (onSelectionChange)="handleSelectionChange($event)"
           >
-            {{ option.description }}
+            {{ option.name }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

@@ -15,6 +15,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { TaxCode } from 'src/app/shared/enums/tax-code';
 import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
 
 @Component({
@@ -37,7 +38,7 @@ export class ProductsTableComponent implements OnInit, OnChanges {
   @Output() onRemoveItem = new EventEmitter();
   isDataPresent: boolean = false;
 
-  columnsToDisplay = ['title', 'newCost', 'newQty', 'taxCode', 'remove'];
+  columnsToDisplay = ['name', 'newCost', 'newQty', 'taxCode', 'remove'];
   columnsToDisplayWithExpand = ['expand', ...this.columnsToDisplay];
   expandedElement?: ProductDetail | null;
 
@@ -55,6 +56,18 @@ export class ProductsTableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
+  }
+
+  calculateCostExcludingTax(element: ProductDetail) {
+    return element.newCost * element.newQty;
+  }
+
+  calculateTax(element: ProductDetail) {
+    if (element.taxCode === TaxCode.NoTax) {
+      return 0;
+    }
+
+    return this.calculateCostExcludingTax(element) * 0.15;
   }
 
   handleRemove(element: ProductDetail) {
