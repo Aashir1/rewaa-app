@@ -13,14 +13,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTableModule } from '@angular/material/table';
 import { ProductService } from './services/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderComponent } from './components/order/order.component';
 import { ProductsDetailsComponent } from './components/products-details/products-details.component';
 import { OrderDetailsComponent } from './container/order-details/order-details.component';
+import { ProductsTableComponent } from './components/products-table/products-table.component';
 
 @NgModule({
-  declarations: [AppComponent, OrderComponent, ProductsDetailsComponent, OrderDetailsComponent],
+  declarations: [
+    AppComponent,
+    OrderComponent,
+    ProductsDetailsComponent,
+    OrderDetailsComponent,
+    ProductsTableComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,6 +42,7 @@ import { OrderDetailsComponent } from './container/order-details/order-details.c
     MatToolbarModule,
     MatAutocompleteModule,
     MatIconModule,
+    MatTableModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent],

@@ -1,26 +1,38 @@
 <form>
-    <mat-card class="products">
-      <mat-card-header>
-        <h3>Products</h3>
-      </mat-card-header>
-      <mat-card-content>
-        <p style="display: flex; align-items: center; column-gap: 5px">
-          <mat-icon> info_outline </mat-icon>
-          <span>
-            Products Qty, the average product cost and the latest buying price are
-            updated after completing the purchase order.
-          </span>
-        </p>
-        <mat-form-field appearance="outline">
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput type="text" name="product" [formControl]="productVariantControl" [matAutocomplete]="auto"
-            placeholder="Type Variant name or SKU" />
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption">
-            <mat-option *ngFor="let option of filteredProductOptions$ | async" [value]="option">
-              {{ option.description }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </mat-card-content>
-    </mat-card>
-  </form>
+  <mat-card class="products">
+    <mat-card-header>
+      <h3>Products</h3>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- TODO: extract styles to css file -->
+      <p style="display: flex; align-items: center; column-gap: 5px">
+        <mat-icon> info_outline </mat-icon>
+        <span>
+          Products Qty, the average product cost and the latest buying price are
+          updated after completing the purchase order.
+        </span>
+      </p>
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          type="text"
+          name="product"
+          [formControl]="productVariantControl"
+          [matAutocomplete]="auto"
+          placeholder="Type Variant name or SKU"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption">
+          <mat-option
+            *ngFor="let option of filteredProductOptions$ | async"
+            [value]="option"
+            (onSelectionChange)="handleSelectionChange($event)"
+          >
+            {{ option.description }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <app-products-table [dataSource]="selectedProducts$"></app-products-table>
+    </mat-card-content>
+  </mat-card>
+</form>

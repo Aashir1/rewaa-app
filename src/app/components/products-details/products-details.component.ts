@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatOptionSelectionChange } from '@angular/material/core';
 import {
+  BehaviorSubject,
   debounceTime,
   map,
   NEVER,
@@ -9,16 +11,17 @@ import {
   startWith,
   switchMap,
 } from 'rxjs';
+import { TaxCode } from 'src/app/enums/tax-code';
+import { ProductDetail } from 'src/app/interfaces/product-detail';
 import { Product } from '../../interfaces/product';
 import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-products-details',
   templateUrl: './products-details.component.html',
-  styleUrls: ['./products-details.component.css']
+  styleUrls: ['./products-details.component.css'],
 })
 export class ProductsDetailsComponent implements OnInit {
-
   supplierName: string = '';
   location: string = '';
   supplierInvoiceNumber: string = '';
@@ -30,6 +33,11 @@ export class ProductsDetailsComponent implements OnInit {
   productVariantControl = new FormControl();
   productOptions$: Observable<Product[]> = of([] as Product[]);
   filteredProductOptions$: Observable<Product[]> = of([] as Product[]);
+
+  // TODO: cleanup variable names
+  previouslySelectedProducts: ProductDetail[] = [];
+  _selectedProducts = new BehaviorSubject([] as ProductDetail[]);
+  selectedProducts$ = this._selectedProducts.asObservable();
 
   constructor(private productService: ProductService) {}
 
@@ -63,4 +71,16 @@ export class ProductsDetailsComponent implements OnInit {
     return option?.description ?? '';
   }
 
+  handleSelectionChange(event: MatOptionSelectionChange) {
+    const selectedProduct = event.source.value as Product;
+
+    this.previouslySelectedProducts.push({
+      ...selectedProduct,
+      newCost: 0,
+      newQty: 0,
+      taxCode: TaxCode.ValueAddedTax,
+    });
+
+    this._selectedProducts.next(this.previouslySelectedProducts);
+  }
 }
