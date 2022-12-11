@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { of } from "rxjs";
-import { Product } from "../interfaces/product";
+import { Product } from "../shared/interfaces/product";
 import { ProductService } from "./product.service";
 
 

@@ -11,9 +11,9 @@ import {
   startWith,
   switchMap,
 } from 'rxjs';
-import { TaxCode } from 'src/app/enums/tax-code';
-import { ProductDetail } from 'src/app/interfaces/product-detail';
-import { Product } from '../../interfaces/product';
+import { TaxCode } from 'src/app/shared/enums/tax-code';
+import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
+import { Product } from '../../shared/interfaces/product';
 import { ProductService } from '../../services/product.service';
 
 @Component({

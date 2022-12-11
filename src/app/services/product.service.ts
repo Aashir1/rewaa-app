@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Product } from '../interfaces/product';
+import { Product } from '../shared/interfaces/product';
 
 const BASE_URL = 'http://localhost:3000';
 

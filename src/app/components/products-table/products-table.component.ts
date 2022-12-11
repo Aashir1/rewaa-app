@@ -13,7 +13,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ProductDetail } from 'src/app/interfaces/product-detail';
+import { ProductDetail } from 'src/app/shared/interfaces/product-detail';
 
 @Component({
   selector: 'app-products-table',
