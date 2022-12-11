@@ -1,4 +1,4 @@
 export enum TaxCode {
-  ValueAddedTax = 'Value Added Tax',
-  NoTax = 'No Tax',
+  ValueAddedTax = 'ValueAddedTax',
+  NoTax = 'NoTax',
 }

@@ -21,6 +21,7 @@ import { ProductsDetailsComponent } from './components/products-details/products
 import { OrderDetailsComponent } from './container/order-details/order-details.component';
 import { ProductsTableComponent } from './components/products-table/products-table.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatTableModule,
     MatButtonModule,
+    MatSelectModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent],
